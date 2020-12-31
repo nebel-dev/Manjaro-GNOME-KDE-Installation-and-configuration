@@ -319,7 +319,7 @@ source ~/.zshrc
 
 我用的zsh，如果用的bash就改成bash。
 
-#### 3.2.1 配置conda清华源
+#### 3.2.1 配置conda清华源,交大源
 
 修改 `~/.condarc` 为如下内容：
 
@@ -342,12 +342,28 @@ custom_channels:
   pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
   simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 ```
+```shell
+default_channels:
+  - https://anaconda.mirrors.sjtug.sjtu.edu.cn/pkgs/r
+  - https://anaconda.mirrors.sjtug.sjtu.edu.cn/pkgs/main
+custom_channels:
+  conda-forge: https://anaconda.mirrors.sjtug.sjtu.edu.cn/cloud/
+  pytorch: https://anaconda.mirrors.sjtug.sjtu.edu.cn/cloud/
+channels:
+  - defaults
+```
 
 #### 3.2.2 配置pip清华源
 
 ```shell
 pip install pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+```
+#### 3.2.3 配置pip交大源
+
+```shell
+pip install pip -U
+pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 ```
 
 #### 3.3 Anaconda配置多个Python环境
