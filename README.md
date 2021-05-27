@@ -12,15 +12,15 @@
     - [2.5.2 Chrome插件-SwitchyOmega](#252-chrome插件-switchyomega)
     - [2.5.3 Qv2Ray代理工具](#253-qv2ray代理工具)
     - [2.5.4 Docker](#254-docker)
-      - [1.安装：https://docs.docker.com/engine/install/linux-postinstall/](#1安装httpsdocsdockercomengineinstalllinux-postinstall)
-      - [2.实现免sudo执行docker命令：](#2实现免sudo执行docker命令)
-      - [3.安装 invidia-docker](#3安装-invidia-docker)
-      - [4.下载 TensorFlow Docker 映像](#4下载-tensorflow-docker-映像)
-      - [5.安装后测试GPU支持](#5安装后测试gpu支持)
-      - [6.运行TF容器](#6运行tf容器)
-      - [7.启动 TensorFlow Docker 容器](#7启动-tensorflow-docker-容器)
-      - [使用仅支持 CPU 的映像的示例](#使用仅支持-cpu-的映像的示例)
-      - [8.更多资料](#8更多资料)
+        - [1.安装：https://docs.docker.com/engine/install/linux-postinstall/](#1安装httpsdocsdockercomengineinstalllinux-postinstall)
+        - [2.实现免sudo执行docker命令：](#2实现免sudo执行docker命令)
+        - [3.安装 invidia-docker](#3安装-invidia-docker)
+        - [4.下载 TensorFlow Docker 映像](#4下载-tensorflow-docker-映像)
+        - [5.安装后测试GPU支持](#5安装后测试gpu支持)
+        - [6.运行TF容器](#6运行tf容器)
+        - [7.启动 TensorFlow Docker 容器](#7启动-tensorflow-docker-容器)
+        - [使用仅支持 CPU 的映像的示例](#使用仅支持-cpu-的映像的示例)
+        - [8.更多资料](#8更多资料)
   - [2.6 配置Nvidia驱动实现双显示屏](#26-配置nvidia驱动实现双显示屏)
     - [2.6.1 移除bunblebee](#261-移除bunblebee)
     - [2.6.2 安装nvidia驱动：](#262-安装nvidia驱动)
@@ -172,13 +172,22 @@ pip install shadowsocks
 用户目录下新建conf文件夹，在里面新建 shadowsocks.json 和 sr.sh ，在shadowsocks.json中添加以下内容：
 
 ```{
-{"server":"hk.ss-link.cn","server_port":15789,"local_port":1080,"password":"11111111","timeout":600,"method":"aes-256-cfb"}
+{
+"server":"hk.ss-link.cn",
+"server_port":15789,
+"local_port":1080,
+"password":"11111111",
+"timeout":600,
+"method":"aes-256-cfb"
+}
 ```
 
 在sr.sh中添加以下内容：
 
 ```
-#!/bin/sh#sr.shsslocal -c /home/yangxinsheng/conf/shadowsocks.json
+#!/bin/sh
+#sr.sh
+sslocal -c /home/yangxinsheng/conf/shadowsocks.json
 ```
 
 修改系统网络设置，更改为手动配置代理服务器：
@@ -194,7 +203,8 @@ sh sr.sh
 此时会报错：
 
 ```
-AttributeError: /usr/local/ssl/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanupshadowsocks start failed
+AttributeError: /usr/local/ssl/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup
+shadowsocks start failed
 ```
 
 解决方法：
@@ -253,7 +263,9 @@ Pacman 安装 Docker `sudo pacman -S docker`
 https://hub.docker.com/r/tensorflow/tensorflow/tags?page=1&ordering=last_updated
 
 ```shell
-docker pull tensorflow/tensorflow                    # latest stable releasedocker pull tensorflow/tensorflow:devel-gpu           # nightly dev release w/ GPU supportdocker pull tensorflow/tensorflow:latest-gpu-jupyter  # latest release w/ GPU support and Jupyter
+docker pull tensorflow/tensorflow                    # latest stable release
+docker pull tensorflow/tensorflow:devel-gpu           # nightly dev release w/ GPU support
+docker pull tensorflow/tensorflow:latest-gpu-jupyter  # latest release w/ GPU support and Jupyter
 ```
 
 ###### 5.安装后测试GPU支持
@@ -263,7 +275,8 @@ docker pull tensorflow/tensorflow                    # latest stable releasedock
 下载并运行支持 GPU 的 TensorFlow 映像（可能需要几分钟的时间）：
 
 ```shell
-docker run --gpus all -it --rm tensorflow/tensorflow:latest-gpu \   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+docker run --gpus all -it --rm tensorflow/tensorflow:latest-gpu \
+   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
 ```
 
 设置支持 GPU 的映像可能需要一段时间。如果重复运行基于 GPU 的脚本，您可以使用 `docker exec` 重复使用容器。
@@ -313,7 +326,8 @@ docker run [-it] [--rm] [-p hostPort:containerPort] tensorflow/tensorflow[:tag] 
 我们使用带 `latest` 标记的映像验证 TensorFlow 安装效果。Docker 会在首次运行时下载新的 TensorFlow 映像：
 
 ```shell
-docker run -it --rm tensorflow/tensorflow \   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+docker run -it --rm tensorflow/tensorflow \
+   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
 ```
 
 **成功**：TensorFlow 现已安装完毕。请查看[教程](https://www.tensorflow.org/tutorials?hl=zh-cn)开始使用。
@@ -369,7 +383,16 @@ sudo mhwd -i pci video-nvidia
 首先，删除`/etc/X11/xorg.conf.d/90-mhwd.conf`，然后再新建一个并写入：
 
 ```
-Section "Module"    Load "modesetting"EndSectionSection "Device"    Identifier "nvidia"    Driver "nvidia"    BusID "PCI:1:0:0"    Option "AllowEmptyInitialConfiguration"EndSection
+Section "Module"
+    Load "modesetting"
+EndSection
+
+Section "Device"
+    Identifier "nvidia"
+    Driver "nvidia"
+    BusID "PCI:1:0:0"
+    Option "AllowEmptyInitialConfiguration"
+EndSection
 ```
 
 其中BusID是基于机器的, 但一般都是这个, 可以用`lspci | grep -E "VGA|3D"`来查看，配置文件要求格式是 `PCI:#:#:#` ，而不是这个命令输出的`01:00.0`。
@@ -377,7 +400,9 @@ Section "Module"    Load "modesetting"EndSectionSection "Device"    Identifier "
 接下来，重新设置黑名单
 
 ```shell
-ls /etc/modprobe.d/mhwd*sudo rm /etc/modprobe.d/mhwd-gpu.confsudo rm /etc/modprobe.d/mhwd-nvidia.conf
+ls /etc/modprobe.d/mhwd*
+sudo rm /etc/modprobe.d/mhwd-gpu.conf
+sudo rm /etc/modprobe.d/mhwd-nvidia.conf
 ```
 
 把列出的mhwd相关的配置**都删了**
@@ -385,7 +410,9 @@ ls /etc/modprobe.d/mhwd*sudo rm /etc/modprobe.d/mhwd-gpu.confsudo rm /etc/modpro
 then，在新建 `/etc/modprobe.d/nvidia.conf`，添加以下内容：
 
 ```shell
-blacklist nouveaublacklist nvidiafbblacklist rivafb
+blacklist nouveau
+blacklist nvidiafb
+blacklist rivafb
 ```
 
 #### 2.6.4 使 nvidia-drm.modeset 生效
@@ -405,7 +432,10 @@ Xfce、Gnome、KDE三种桌面设置方式不同，[Xfce请参考这里](https:/
 新建文件`/usr/share/sddm/scripts/Xsetup`，如果有了就直接修改，修改为如下内容：
 
 ```shell
-#!/bin/shxrandr --setprovideroutputsource modesetting NVIDIA-0xrandr --auto
+#!/bin/sh
+
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
 ```
 
 **Gnome:**
@@ -413,13 +443,19 @@ Xfce、Gnome、KDE三种桌面设置方式不同，[Xfce请参考这里](https:/
 新建文件`/usr/local/share/optimus.desktop`
 
 ```shell
-[Desktop Entry]Type=ApplicationName=OptimusExec=sh -c "xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto"NoDisplay=trueX-GNOME-Autostart-Phase=DisplayServer
+[Desktop Entry]
+Type=Application
+Name=Optimus
+Exec=sh -c "xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto"
+NoDisplay=true
+X-GNOME-Autostart-Phase=DisplayServer
 ```
 
  link it into place so it starts with GDM and on login
 
 ```shell
-sudo ln -s /usr/local/share/optimus.desktop /usr/share/gdm/greeter/autostart/optimus.desktopsudo ln -s /usr/local/share/optimus.desktop /etc/xdg/autostart/optimus.desktop
+sudo ln -s /usr/local/share/optimus.desktop /usr/share/gdm/greeter/autostart/optimus.desktop
+sudo ln -s /usr/local/share/optimus.desktop /etc/xdg/autostart/optimus.desktop
 ```
 
 ~~然后source一下`source Xsetup`~~
@@ -427,7 +463,11 @@ sudo ln -s /usr/local/share/optimus.desktop /usr/share/gdm/greeter/autostart/opt
 #### 2.6.6 重启
 
 ```shell
-glxinfo | grep -i vendor应该可以看到以下输出：server glx vendor string: NVIDIA Corporationclient glx vendor string: NVIDIA CorporationOpenGL vendor string: NVIDIA Corporation
+glxinfo | grep -i vendor
+应该可以看到以下输出：
+server glx vendor string: NVIDIA Corporation
+client glx vendor string: NVIDIA Corporation
+OpenGL vendor string: NVIDIA Corporation
 ```
 
 ## 3 miniconda 配置
@@ -439,21 +479,46 @@ glxinfo | grep -i vendor应该可以看到以下输出：server glx vendor strin
 修改 `~/.condarc` 为如下内容：
 
 ```shell
-channels:  - defaultsshow_channel_urls: truechannel_alias: https://mirrors.tuna.tsinghua.edu.cn/anacondadefault_channels:  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2custom_channels:  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+channels:
+  - defaults
+show_channel_urls: true
+channel_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 ```
 
 ```shell
-default_channels:  - https://anaconda.mirrors.sjtug.sjtu.edu.cn/pkgs/r  - https://anaconda.mirrors.sjtug.sjtu.edu.cn/pkgs/maincustom_channels:  conda-forge: https://anaconda.mirrors.sjtug.sjtu.edu.cn/cloud/  pytorch: https://anaconda.mirrors.sjtug.sjtu.edu.cn/cloud/channels:  - defaults
+default_channels:
+  - https://anaconda.mirrors.sjtug.sjtu.edu.cn/pkgs/r
+  - https://anaconda.mirrors.sjtug.sjtu.edu.cn/pkgs/main
+custom_channels:
+  conda-forge: https://anaconda.mirrors.sjtug.sjtu.edu.cn/cloud/
+  pytorch: https://anaconda.mirrors.sjtug.sjtu.edu.cn/cloud/
+channels:
+  - defaults
 ```
 
 #### 3.1.2 配置pip清华源/交大源
 
 ```shell
-pip install pip -Upip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+pip install pip -U
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ```shell
-pip install pip -Upip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+pip install pip -U
+pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 ```
 
 ### 3.2 Jupyter-Notebook
@@ -463,7 +528,8 @@ pip install pip -Upip config set global.index-url https://mirrors.sjtug.sjtu.edu
 Jupyter notebook被汉化后修改回英文：
 
 ```shell
-echo 'LANGUAGE="" LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8' >> ~/.zshrcsource ~/.zshrc
+echo 'LANGUAGE="" LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8' >> ~/.zshrc
+source ~/.zshrc
 ```
 
 我用的zsh，如果用的bash就改成bash。
@@ -513,7 +579,8 @@ conda info --e
 切换环境：
 
 ```shell
-conda activate env_name  #Linux下激活环境conda deactivate         #Linux下关闭环境
+conda activate env_name  #Linux下激活环境
+conda deactivate         #Linux下关闭环境
 ```
 
 #### 3.2.4 配置jupyter多环境
@@ -565,7 +632,8 @@ jupyter notebook --generate-config
 2. 在上方添加两行，注册浏览器
 
    ```python
-   import webbrowserwebbrowser.register('google-chrome-stable',None,webbrowser.GenericBrowser('//usr/bin/google-chrome-stable'))
+   import webbrowser
+   webbrowser.register('google-chrome-stable',None,webbrowser.GenericBrowser('//usr/bin/google-chrome-stable'))
    ```
 
 3. 将`c.NotebookApp.open_browser = True`前的“#”去掉，解除注释状态，即可自动打开浏览器
@@ -601,7 +669,8 @@ pip install -r requirements.txt
 ### 3.3 安装TensorFlow-gpu
 
 ```shell
-conda search tensorflow-gpu              #查看目前conda中tf-gpu版本conda install tensorflow-gpu             #安装以上搜索结果中的最新版
+conda search tensorflow-gpu              #查看目前conda中tf-gpu版本
+conda install tensorflow-gpu             #安装以上搜索结果中的最新版
 ```
 
 ## 4 疑难杂症
