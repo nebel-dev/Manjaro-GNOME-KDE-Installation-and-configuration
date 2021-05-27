@@ -1,5 +1,56 @@
-[toc]
-
+- [1 Manjaro GNOME & KDE 安装与配置](#1-manjaro-gnome--kde-安装与配置)
+  - [1.1 启动盘](#11-启动盘)
+  - [1.2 驱动选择non-free](#12-驱动选择non-free)
+  - [1.3 分区](#13-分区)
+- [2 Manjaro 系统配置](#2-manjaro-系统配置)
+  - [2.1 切换软件源](#21-切换软件源)
+  - [2.2 中文输入法](#22-中文输入法)
+  - [2.3 zsh与oh-my-zsh](#23-zsh与oh-my-zsh)
+  - [~~2.4 shadowsocks~~](#24-shadowsocks)
+  - [2.5 软件安装](#25-软件安装)
+    - [2.5.1 Chrome：](#251-chrome)
+    - [2.5.2 Chrome插件-SwitchyOmega](#252-chrome插件-switchyomega)
+      - [2.5.3 Qv2Ray代理工具](#253-qv2ray代理工具)
+    - [2.5.4 Docker](#254-docker)
+      - [1.安装：https://docs.docker.com/engine/install/linux-postinstall/](#1安装httpsdocsdockercomengineinstalllinux-postinstall)
+      - [2.实现免sudo执行docker命令：](#2实现免sudo执行docker命令)
+      - [3.安装 invidia-docker](#3安装-invidia-docker)
+      - [4.下载 TensorFlow Docker 映像](#4下载-tensorflow-docker-映像)
+      - [5.安装后测试GPU支持](#5安装后测试gpu支持)
+      - [6.运行TF容器](#6运行tf容器)
+      - [7.启动 TensorFlow Docker 容器](#7启动-tensorflow-docker-容器)
+      - [使用仅支持 CPU 的映像的示例](#使用仅支持-cpu-的映像的示例)
+      - [8.更多资料](#8更多资料)
+  - [2.6 配置Nvidia驱动实现双显示屏](#26-配置nvidia驱动实现双显示屏)
+    - [2.6.1 移除bunblebee](#261-移除bunblebee)
+    - [2.6.2 安装nvidia驱动：](#262-安装nvidia驱动)
+    - [2.6.3 修复mhwd的配置](#263-修复mhwd的配置)
+    - [2.6.4 使 nvidia-drm.modeset 生效](#264-使-nvidia-drmmodeset-生效)
+    - [2.6.5 设置输出源](#265-设置输出源)
+    - [2.6.6 重启](#266-重启)
+- [3 miniconda 配置](#3-miniconda-配置)
+  - [3.1 选择镜像源](#31-选择镜像源)
+    - [3.1.1 配置conda清华源/交大源](#311-配置conda清华源交大源)
+    - [3.1.2 配置pip清华源/交大源](#312-配置pip清华源交大源)
+  - [3.2 Jupyter-Notebook](#32-jupyter-notebook)
+    - [3.2.1 解决Jupyter面板变成中文的问题](#321-解决jupyter面板变成中文的问题)
+    - [3.2.2 Jupyter Notebook 添加代码自动补全功能](#322-jupyter-notebook-添加代码自动补全功能)
+    - [3.2.3 conda配置多个Python环境](#323-conda配置多个python环境)
+    - [3.2.4 配置jupyter多环境](#324-配置jupyter多环境)
+    - [3.2.5 修改jupyter默认浏览器以及解决不自动打开的问题](#325-修改jupyter默认浏览器以及解决不自动打开的问题)
+    - [3.2.6 修改jupyter初始目录](#326-修改jupyter初始目录)
+    - [3.2.7 安装必要的包](#327-安装必要的包)
+  - [3.3 安装TensorFlow-gpu](#33-安装tensorflow-gpu)
+- [4 疑难杂症](#4-疑难杂症)
+  - [4.1 避免自动跳转google.com.hk](#41-避免自动跳转googlecomhk)
+  - [4.2 Manjaro添加及删除源](#42-manjaro添加及删除源)
+  - [4.3 ntfs格式硬盘在Manjaro下为只读](#43-ntfs格式硬盘在manjaro下为只读)
+  - [4.4 去除蜂鸣警告音](#44-去除蜂鸣警告音)
+  - [4.5 清除系统中无用的包](#45-清除系统中无用的包)
+  - [4.6 清除已下载的安装包](#46-清除已下载的安装包)
+  - [4.7 卡在登陆界面](#47-卡在登陆界面)
+  - [4.8 添加pycharm到系统环境变量中](#48-添加pycharm到系统环境变量中)
+  - [4.9 破解PyCharm专业版](#49-破解pycharm专业版)
 
 
 ###### Manjaro的三个版本都使用过，对我来说，XFCE界面太简单，KDE太复杂，GNOME刚好，用了一圈最后选择了GNOME.
@@ -121,22 +172,13 @@ pip install shadowsocks
 用户目录下新建conf文件夹，在里面新建 shadowsocks.json 和 sr.sh ，在shadowsocks.json中添加以下内容：
 
 ```{
-{
-"server":"hk.ss-link.cn",
-"server_port":15789,
-"local_port":1080,
-"password":"11111111",
-"timeout":600,
-"method":"aes-256-cfb"
-}
+{"server":"hk.ss-link.cn","server_port":15789,"local_port":1080,"password":"11111111","timeout":600,"method":"aes-256-cfb"}
 ```
 
 在sr.sh中添加以下内容：
 
 ```
-#!/bin/sh
-#sr.sh
-sslocal -c /home/yangxinsheng/conf/shadowsocks.json
+#!/bin/sh#sr.shsslocal -c /home/yangxinsheng/conf/shadowsocks.json
 ```
 
 修改系统网络设置，更改为手动配置代理服务器：
@@ -152,8 +194,7 @@ sh sr.sh
 此时会报错：
 
 ```
-AttributeError: /usr/local/ssl/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup
-shadowsocks start failed
+AttributeError: /usr/local/ssl/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanupshadowsocks start failed
 ```
 
 解决方法：
@@ -176,7 +217,11 @@ sudo pacman -S google-chrome
 
 https://github.com/FelisCatus/SwitchyOmega/wiki/GFWList
 
-#### 2.5.3 Docker
+###### 2.5.3 Qv2Ray代理工具
+
+问题：telegram客户端无法连接
+
+#### 2.5.4 Docker
 
 ###### 1.安装：https://docs.docker.com/engine/install/linux-postinstall/
 
@@ -208,9 +253,7 @@ Pacman 安装 Docker `sudo pacman -S docker`
 https://hub.docker.com/r/tensorflow/tensorflow/tags?page=1&ordering=last_updated
 
 ```shell
-docker pull tensorflow/tensorflow                    # latest stable release
-docker pull tensorflow/tensorflow:devel-gpu           # nightly dev release w/ GPU support
-docker pull tensorflow/tensorflow:latest-gpu-jupyter  # latest release w/ GPU support and Jupyter
+docker pull tensorflow/tensorflow                    # latest stable releasedocker pull tensorflow/tensorflow:devel-gpu           # nightly dev release w/ GPU supportdocker pull tensorflow/tensorflow:latest-gpu-jupyter  # latest release w/ GPU support and Jupyter
 ```
 
 ###### 5.安装后测试GPU支持
@@ -220,8 +263,7 @@ docker pull tensorflow/tensorflow:latest-gpu-jupyter  # latest release w/ GPU su
 下载并运行支持 GPU 的 TensorFlow 映像（可能需要几分钟的时间）：
 
 ```shell
-docker run --gpus all -it --rm tensorflow/tensorflow:latest-gpu \
-   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+docker run --gpus all -it --rm tensorflow/tensorflow:latest-gpu \   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
 ```
 
 设置支持 GPU 的映像可能需要一段时间。如果重复运行基于 GPU 的脚本，您可以使用 `docker exec` 重复使用容器。
@@ -271,8 +313,7 @@ docker run [-it] [--rm] [-p hostPort:containerPort] tensorflow/tensorflow[:tag] 
 我们使用带 `latest` 标记的映像验证 TensorFlow 安装效果。Docker 会在首次运行时下载新的 TensorFlow 映像：
 
 ```shell
-docker run -it --rm tensorflow/tensorflow \
-   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+docker run -it --rm tensorflow/tensorflow \   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
 ```
 
 **成功**：TensorFlow 现已安装完毕。请查看[教程](https://www.tensorflow.org/tutorials?hl=zh-cn)开始使用。
@@ -328,16 +369,7 @@ sudo mhwd -i pci video-nvidia
 首先，删除`/etc/X11/xorg.conf.d/90-mhwd.conf`，然后再新建一个并写入：
 
 ```
-Section "Module"
-    Load "modesetting"
-EndSection
-
-Section "Device"
-    Identifier "nvidia"
-    Driver "nvidia"
-    BusID "PCI:1:0:0"
-    Option "AllowEmptyInitialConfiguration"
-EndSection
+Section "Module"    Load "modesetting"EndSectionSection "Device"    Identifier "nvidia"    Driver "nvidia"    BusID "PCI:1:0:0"    Option "AllowEmptyInitialConfiguration"EndSection
 ```
 
 其中BusID是基于机器的, 但一般都是这个, 可以用`lspci | grep -E "VGA|3D"`来查看，配置文件要求格式是 `PCI:#:#:#` ，而不是这个命令输出的`01:00.0`。
@@ -345,9 +377,7 @@ EndSection
 接下来，重新设置黑名单
 
 ```shell
-ls /etc/modprobe.d/mhwd*
-sudo rm /etc/modprobe.d/mhwd-gpu.conf
-sudo rm /etc/modprobe.d/mhwd-nvidia.conf
+ls /etc/modprobe.d/mhwd*sudo rm /etc/modprobe.d/mhwd-gpu.confsudo rm /etc/modprobe.d/mhwd-nvidia.conf
 ```
 
 把列出的mhwd相关的配置**都删了**
@@ -355,9 +385,7 @@ sudo rm /etc/modprobe.d/mhwd-nvidia.conf
 then，在新建 `/etc/modprobe.d/nvidia.conf`，添加以下内容：
 
 ```shell
-blacklist nouveau
-blacklist nvidiafb
-blacklist rivafb
+blacklist nouveaublacklist nvidiafbblacklist rivafb
 ```
 
 #### 2.6.4 使 nvidia-drm.modeset 生效
