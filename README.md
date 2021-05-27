@@ -12,7 +12,7 @@
     - [2.5.2 Chrome插件-SwitchyOmega](#252-chrome插件-switchyomega)
     - [2.5.3 Qv2Ray代理工具](#253-qv2ray代理工具)
     - [2.5.4 Docker](#254-docker)
-        - [1.安装：https://docs.docker.com/engine/install/linux-postinstall/](#1安装httpsdocsdockercomengineinstalllinux-postinstall)
+        - [1.安装：](#1安装)
         - [2.实现免sudo执行docker命令：](#2实现免sudo执行docker命令)
         - [3.安装 invidia-docker](#3安装-invidia-docker)
         - [4.下载 TensorFlow Docker 映像](#4下载-tensorflow-docker-映像)
@@ -233,7 +233,9 @@ https://github.com/FelisCatus/SwitchyOmega/wiki/GFWList
 
 #### 2.5.4 Docker
 
-###### 1.安装：https://docs.docker.com/engine/install/linux-postinstall/
+###### 1.安装：
+
+https://docs.docker.com/engine/install/linux-postinstall/
 
 Pacman 安装 Docker `sudo pacman -S docker` 
 
