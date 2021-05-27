@@ -21,6 +21,7 @@
         - [7.启动 TensorFlow Docker 容器](#7启动-tensorflow-docker-容器)
         - [使用仅支持 CPU 的映像的示例](#使用仅支持-cpu-的映像的示例)
         - [8.更多资料](#8更多资料)
+    - [2.5.5 VsCode](#255-vscode)
   - [2.6 配置Nvidia驱动实现双显示屏](#26-配置nvidia驱动实现双显示屏)
     - [2.6.1 移除bunblebee](#261-移除bunblebee)
     - [2.6.2 安装nvidia驱动：](#262-安装nvidia驱动)
@@ -367,6 +368,11 @@ Docker文档：https://docs.docker.com/
 Docker安装文档：https://docs.docker.com/engine/install/linux-postinstall/
 
 Docker运行说明：https://docs.docker.com/engine/reference/run/
+
+#### 2.5.5 VsCode
+
+安装markdown插件：`auto markdown toc`，`markdown all in one`，`markdown preview enhanced`
+生成适用于github的目录：快捷键CTRL(CMD)+SHIFT+P，输入Markdown All in One: Create Table of Contents
 
 ### 2.6 配置Nvidia驱动实现双显示屏
 
