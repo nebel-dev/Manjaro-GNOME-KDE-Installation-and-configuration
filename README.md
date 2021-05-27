@@ -263,7 +263,7 @@ Pacman 安装 Docker `sudo pacman -S docker`
 https://hub.docker.com/r/tensorflow/tensorflow/tags?page=1&ordering=last_updated
 
 ```shell
-docker pull tensorflow/tensorflow                    # latest stable release
+docker pull tensorflow/tensorflow                     # latest stable release
 docker pull tensorflow/tensorflow:devel-gpu           # nightly dev release w/ GPU support
 docker pull tensorflow/tensorflow:latest-gpu-jupyter  # latest release w/ GPU support and Jupyter
 ```
@@ -739,11 +739,7 @@ export PATH=/home/yxs/pycharm-2020.3.5/bin:$PATH
 
 ### 4.9 破解PyCharm专业版
 
-所有版本Pycharm无限重置试用：
+所有版本Pycharm无限重置试用：https://docs.qq.com/doc/DR3VseU5uTEZ2UU5N
 
-https://docs.qq.com/doc/DR3VseU5uTEZ2UU5N
-
-破解插件地址：
-
-https://wwa.lanzoui.com/iQaDSp2kdch
+破解插件地址：https://wwa.lanzoui.com/iQaDSp2kdch
 
