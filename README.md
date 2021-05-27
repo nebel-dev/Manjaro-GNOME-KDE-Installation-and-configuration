@@ -10,7 +10,7 @@
   - [2.5 软件安装](#25-软件安装)
     - [2.5.1 Chrome：](#251-chrome)
     - [2.5.2 Chrome插件-SwitchyOmega](#252-chrome插件-switchyomega)
-      - [2.5.3 Qv2Ray代理工具](#253-qv2ray代理工具)
+    - [2.5.3 Qv2Ray代理工具](#253-qv2ray代理工具)
     - [2.5.4 Docker](#254-docker)
       - [1.安装：https://docs.docker.com/engine/install/linux-postinstall/](#1安装httpsdocsdockercomengineinstalllinux-postinstall)
       - [2.实现免sudo执行docker命令：](#2实现免sudo执行docker命令)
@@ -217,7 +217,7 @@ sudo pacman -S google-chrome
 
 https://github.com/FelisCatus/SwitchyOmega/wiki/GFWList
 
-###### 2.5.3 Qv2Ray代理工具
+#### 2.5.3 Qv2Ray代理工具
 
 问题：telegram客户端无法连接
 
