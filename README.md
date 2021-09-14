@@ -1,3 +1,4 @@
+# Manjaro-GNOME-KDE-Installation-and-configuration
 - [1 Manjaro GNOME & KDE 安装与配置](#1-manjaro-gnome--kde-安装与配置)
   - [1.1 启动盘](#11-启动盘)
   - [1.2 驱动选择non-free](#12-驱动选择non-free)
