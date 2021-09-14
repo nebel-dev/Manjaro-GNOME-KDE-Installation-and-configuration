@@ -623,7 +623,7 @@ jupyter kernelspec remove tf2
 
 #### 3.2.5 修改jupyter默认浏览器以及解决不自动打开的问题
 
-手动生成pycharm配置文件，在base环境下输入：
+手动生成jupyter配置文件，在base环境下输入：
 
 ```shell
 jupyter notebook --generate-config
