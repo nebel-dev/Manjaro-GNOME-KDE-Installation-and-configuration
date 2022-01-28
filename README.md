@@ -1,66 +1,64 @@
 # Manjaro-GNOME-KDE-Installation-and-configuration
-- [1 Manjaro GNOME & KDE 安装与配置](#1-manjaro-gnome--kde-安装与配置)
-  - [1.1 启动盘](#11-启动盘)
-  - [1.2 驱动选择non-free](#12-驱动选择non-free)
-  - [1.3 分区](#13-分区)
-- [2 Manjaro 系统配置](#2-manjaro-系统配置)
-  - [2.1 切换软件源](#21-切换软件源)
-  - [2.2 中文输入法](#22-中文输入法)
-  - [2.3 zsh与oh-my-zsh](#23-zsh与oh-my-zsh)
-  - [~~2.4 shadowsocks~~](#24-shadowsocks)
-  - [2.5 软件安装](#25-软件安装)
-    - [2.5.1 Chrome：](#251-chrome)
-    - [2.5.2 Chrome插件-SwitchyOmega](#252-chrome插件-switchyomega)
-    - [2.5.3 Qv2Ray代理工具](#253-qv2ray代理工具)
-    - [2.5.4 Docker](#254-docker)
-        - [1.安装：](#1安装)
-        - [2.实现免sudo执行docker命令：](#2实现免sudo执行docker命令)
-        - [3.安装 invidia-docker](#3安装-invidia-docker)
-        - [4.下载 TensorFlow Docker 映像](#4下载-tensorflow-docker-映像)
-        - [5.安装后测试GPU支持](#5安装后测试gpu支持)
-        - [6.运行TF容器](#6运行tf容器)
-        - [7.启动 TensorFlow Docker 容器](#7启动-tensorflow-docker-容器)
-        - [使用仅支持 CPU 的映像的示例](#使用仅支持-cpu-的映像的示例)
-        - [8.更多资料](#8更多资料)
-    - [2.5.5 VsCode](#255-vscode)
-  - [2.6 配置Nvidia驱动实现双显示屏](#26-配置nvidia驱动实现双显示屏)
-    - [2.6.1 移除bunblebee](#261-移除bunblebee)
-    - [2.6.2 安装nvidia驱动：](#262-安装nvidia驱动)
-    - [2.6.3 修复mhwd的配置](#263-修复mhwd的配置)
-    - [2.6.4 使 nvidia-drm.modeset 生效](#264-使-nvidia-drmmodeset-生效)
-    - [2.6.5 设置输出源](#265-设置输出源)
-    - [2.6.6 重启](#266-重启)
-- [3 miniconda 配置](#3-miniconda-配置)
-  - [3.1 选择镜像源](#31-选择镜像源)
-    - [3.1.1 配置conda清华源/交大源](#311-配置conda清华源交大源)
-    - [3.1.2 配置pip清华源/交大源](#312-配置pip清华源交大源)
-  - [3.2 Jupyter-Notebook](#32-jupyter-notebook)
-    - [3.2.1 解决Jupyter面板变成中文的问题](#321-解决jupyter面板变成中文的问题)
-    - [3.2.2 Jupyter Notebook 添加代码自动补全功能](#322-jupyter-notebook-添加代码自动补全功能)
-    - [3.2.3 conda配置多个Python环境](#323-conda配置多个python环境)
-    - [3.2.4 配置jupyter多环境](#324-配置jupyter多环境)
-    - [3.2.5 修改jupyter默认浏览器以及解决不自动打开的问题](#325-修改jupyter默认浏览器以及解决不自动打开的问题)
-    - [3.2.6 修改jupyter初始目录](#326-修改jupyter初始目录)
-    - [3.2.7 安装必要的包](#327-安装必要的包)
-  - [3.3 安装TensorFlow-gpu](#33-安装tensorflow-gpu)
-- [4 疑难杂症](#4-疑难杂症)
-  - [4.1 避免自动跳转google.com.hk](#41-避免自动跳转googlecomhk)
-  - [4.2 Manjaro添加及删除源](#42-manjaro添加及删除源)
-  - [4.3 ntfs格式硬盘在Manjaro下为只读](#43-ntfs格式硬盘在manjaro下为只读)
-  - [4.4 去除蜂鸣警告音](#44-去除蜂鸣警告音)
-  - [4.5 清除系统中无用的包](#45-清除系统中无用的包)
-  - [4.6 清除已下载的安装包](#46-清除已下载的安装包)
-  - [4.7 卡在登陆界面](#47-卡在登陆界面)
-  - [4.8 添加pycharm到系统环境变量中](#48-添加pycharm到系统环境变量中)
-  - [4.9 破解PyCharm专业版](#49-破解pycharm专业版)
 
-
-###### Manjaro的三个版本都使用过，对我来说，XFCE界面太简单，KDE太复杂，GNOME刚好，用了一圈最后选择了GNOME.
-
-###### [你适合用什么Linux操作系统？](https://distrochooser.de/zh-cn/)
-
-------
-
+- [Manjaro-GNOME-KDE-Installation-and-configuration](#manjaro-gnome-kde-installation-and-configuration)
+  - [1 Manjaro GNOME & KDE 安装与配置](#1-manjaro-gnome--kde-安装与配置)
+    - [1.1 启动盘](#11-启动盘)
+    - [1.2 驱动选择non-free](#12-驱动选择non-free)
+    - [1.3 分区](#13-分区)
+  - [2 Manjaro 系统配置](#2-manjaro-系统配置)
+    - [2.1 切换软件源](#21-切换软件源)
+    - [2.2 安装deb包](#22-安装deb包)
+    - [2.3 中文输入法](#23-中文输入法)
+    - [2.3 zsh与oh-my-zsh](#23-zsh与oh-my-zsh)
+    - [~~2.4 shadowsocks~~](#24-shadowsocks)
+    - [2.5 软件安装](#25-软件安装)
+      - [2.5.1 Chrome：](#251-chrome)
+      - [2.5.2 Chrome插件-SwitchyOmega](#252-chrome插件-switchyomega)
+      - [2.5.3 Qv2Ray代理工具](#253-qv2ray代理工具)
+      - [2.5.4 Docker](#254-docker)
+          - [1.安装：](#1安装)
+          - [2.实现免sudo执行docker命令：](#2实现免sudo执行docker命令)
+          - [3.安装 invidia-docker](#3安装-invidia-docker)
+          - [4.下载 TensorFlow Docker 映像](#4下载-tensorflow-docker-映像)
+          - [5.安装后测试GPU支持](#5安装后测试gpu支持)
+          - [6.运行TF容器](#6运行tf容器)
+          - [7.启动 TensorFlow Docker 容器](#7启动-tensorflow-docker-容器)
+          - [使用仅支持 CPU 的映像的示例](#使用仅支持-cpu-的映像的示例)
+          - [8.更多资料](#8更多资料)
+      - [2.5.5 VsCode](#255-vscode)
+    - [2.6 配置Nvidia驱动实现双显示屏](#26-配置nvidia驱动实现双显示屏)
+      - [2.6.1 移除bunblebee](#261-移除bunblebee)
+      - [2.6.2 安装nvidia驱动：](#262-安装nvidia驱动)
+      - [2.6.3 修复mhwd的配置](#263-修复mhwd的配置)
+      - [2.6.4 使 nvidia-drm.modeset 生效](#264-使-nvidia-drmmodeset-生效)
+      - [2.6.5 设置输出源](#265-设置输出源)
+      - [2.6.6 重启](#266-重启)
+  - [3 miniconda 配置](#3-miniconda-配置)
+    - [3.1 选择镜像源](#31-选择镜像源)
+      - [3.1.1 配置conda清华源/交大源](#311-配置conda清华源交大源)
+      - [3.1.2 配置pip清华源/交大源](#312-配置pip清华源交大源)
+    - [3.2 Jupyter-Notebook](#32-jupyter-notebook)
+      - [3.2.1 解决Jupyter面板变成中文的问题](#321-解决jupyter面板变成中文的问题)
+      - [3.2.2 Jupyter Notebook 添加代码自动补全功能](#322-jupyter-notebook-添加代码自动补全功能)
+      - [3.2.3 conda配置多个Python环境](#323-conda配置多个python环境)
+      - [3.2.4 配置jupyter多环境](#324-配置jupyter多环境)
+      - [3.2.5 修改jupyter默认浏览器以及解决不自动打开的问题](#325-修改jupyter默认浏览器以及解决不自动打开的问题)
+      - [3.2.6 修改jupyter初始目录](#326-修改jupyter初始目录)
+      - [3.2.7 安装必要的包](#327-安装必要的包)
+    - [3.3 安装TensorFlow-gpu](#33-安装tensorflow-gpu)
+  - [4 疑难杂症](#4-疑难杂症)
+    - [4.1 避免自动跳转google.com.hk](#41-避免自动跳转googlecomhk)
+    - [4.2 Manjaro添加及删除源](#42-manjaro添加及删除源)
+    - [4.3 ntfs格式硬盘在Manjaro下为只读](#43-ntfs格式硬盘在manjaro下为只读)
+    - [4.4 去除蜂鸣警告音](#44-去除蜂鸣警告音)
+    - [4.5 清除系统中无用的包](#45-清除系统中无用的包)
+    - [4.6 清除已下载的安装包](#46-清除已下载的安装包)
+    - [4.7 卡在登陆界面](#47-卡在登陆界面)
+    - [4.8 添加pycharm到系统环境变量中](#48-添加pycharm到系统环境变量中)
+    - [4.9 破解PyCharm专业版](#49-破解pycharm专业版)
+---
+Manjaro的三个版本都使用过，对我来说，不喜欢XFCE、KDE界面，GNOME刚好
+[你适合用什么Linux操作系统？](https://distrochooser.de/zh-cn/)
 
 
 ## 1 Manjaro GNOME & KDE 安装与配置
@@ -120,10 +118,31 @@ sudo pacman -Syy && sudo pacman -S archlinuxcn-keyring
 ```
 
 最后在软件包管理器的设置中启用AUR支持，因为这里有很多软件。
+### 2.2 安装deb包
+通过`yay`安装`debtap`
+```sh
+sudo pacman -S yay
+sudo yay -S debtap
+```
+替换源，解决debtap同步仓库速度慢
+```sh
+sudo gvim /usr/bin/debtap
+      :%s/http://ftp.debian.org/https://mirrors.ustc.edu.cn/g
+      :%s/http://archive.ubuntu.com/https://mirrors.ustc.edu.cn/g
+```
+更新debtap并转换格式
+```sh
+sudo debtap -u
+sudo debtap -q xxxx.deb
+```
+回车到底，得到`.pkg.tar.rst`文件，安装
+```sh
+sudo pacman -U xxxx.pkg.tar.rst
+```
 
-### 2.2 中文输入法
+### 2.3 中文输入法
 
-默认输入法挺好用的，懒得装别的了
+默认输入法
 
 ```shell
 sudo pacman -S fcitx-im # 全部安装
